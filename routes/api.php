@@ -15,7 +15,8 @@ Route::prefix('/')->group(function () {
     });
 
     Route::prefix('threads/')->controller(ConversationController::class)->group(function () {
-        Route::get('', 'threadsList');
+        Route::get('', 'threadsList')->middleware('jwt.verify');
+        Route::get('{thread_id}', 'threadDetail')->middleware('jwt.verify');
     });
 
 });
