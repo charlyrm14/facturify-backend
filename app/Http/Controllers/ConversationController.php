@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ThreadDetailRequest;
 use App\Http\Requests\ThreadRequest;
 use App\Models\Conversation;
 use Illuminate\Http\JsonResponse;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ConversationController extends Controller
 {
@@ -49,6 +51,44 @@ class ConversationController extends Controller
 
             return response()->json([
                 'data' => $conversations
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json(["error" => 'Internal server error'], 500);
+        }
+    }
+
+    /**
+     * The function `threadDetail` retrieves a conversation with its related conversation type and user
+     * by its ID and returns it as JSON response, handling errors appropriately.
+     *
+     * @param ThreadDetailRequest request The `threadDetail` function takes two parameters:
+     * @param int thread_id The `thread_id` parameter in the `threadDetail` function represents the
+     * unique identifier of the thread or conversation for which you want to retrieve details. It is
+     * used to fetch the conversation details from the database based on this specific identifier.
+     *
+     * @return The `threadDetail` function is returning a JSON response. If the conversation with the
+     * specified thread ID is found, it returns a JSON response with the conversation data under the
+     * 'data' key and a status code of 200. If the conversation is not found, it returns a JSON
+     * response with a 'Resource not found' message and a status code of 404. If an exception occurs
+     * during the
+     */
+    public function threadDetail(ThreadDetailRequest $request, int $thread_id)
+    {
+        try {
+
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['error' => 'User not found'], 404);
+            }
+            
+            $conversation = Conversation::with(['conversationType', 'user'])->byId($thread_id)->first();
+
+            if(!$conversation) {
+                return response()->json(['message' => 'Resource not found'], 404);
+            }
+
+            return response()->json([
+                'data' => $conversation
             ], 200);
 
         } catch (\Exception $e) {
