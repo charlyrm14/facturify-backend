@@ -77,5 +77,13 @@ Endpoints
 - Postman Documenter: para generar la documentación de algunos de los endpoints
 - Mintlify: Para documentar funciones en controladores y endpoints
 
+### **Notas:**
+
+Dentro de la carpeta public se encuentran los siguientes archivos importantes para el proyecto:
+
+- Diagrama de Entidad-Relación (ER): diagrama-modelo-er.png
+
+- Colección de Postman: Archivo JSON con la colección de endpoints para probar la API y facilitar el desarrollo y pruebas.
+
 ### **Autores:**
 Carlos I. Ramos Morales
