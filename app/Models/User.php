@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -47,6 +47,18 @@ class User extends Authenticatable implements JWTSubject
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * The function setPasswordAttribute in PHP hashes the input password before setting it as an
+     * attribute.
+     * 
+     * @param password The `setPasswordAttribute` function is a mutator in Laravel Eloquent that
+     * automatically hashes the password before saving it to the database. This helps to ensure that
+     * the password is securely stored.
+     */
+    public function setPasswordAttribute($password){
+        $this->attributes['password'] = Hash::make($password);
     }
 
     /**
