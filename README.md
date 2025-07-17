@@ -75,6 +75,7 @@ Endpoints
 
 ### Herramientas usadas:
 - Postman Documenter: para generar la documentación de algunos de los endpoints
+- Mintlify: Para documentar funciones en controladores y endpoints
 
 ### **Autores:**
 Carlos I. Ramos Morales
