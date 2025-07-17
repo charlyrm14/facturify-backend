@@ -11,6 +11,7 @@ use App\Http\Requests\ThreadRequest;
 use App\Models\Conversation;
 use App\Models\ConversationUser;
 use App\Models\Message;
+use App\Models\Notification;
 use Illuminate\Http\JsonResponse;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +32,7 @@ class ConversationController extends Controller
      * "No results found" and a status code of 404. If an exception occurs during the process, it will
      * return a JSON response
      */
-    public function threadsList(ThreadRequest $request): JsonResponse
+    public function index(ThreadRequest $request): JsonResponse
     {
         try {
 
@@ -160,6 +161,8 @@ class ConversationController extends Controller
      */
     public function replyMessage(ReplyMessageRequest $request, int $thread_id): JsonResponse
     {
+        DB::beginTransaction();
+
         try {
 
             $conversation = Conversation::byId($thread_id)->first();
@@ -168,7 +171,10 @@ class ConversationController extends Controller
                 return response()->json(['message' => 'Resource not found'], 404);
             }
 
+            DB::commit();
+
             $message = Message::createReplyMessage($conversation, $request->validated());
+            Notification::createNotificationReplyMessage($conversation->user_id, $message);
             $message->load(['conversation', 'user', 'parentMessage']);
 
             return response()->json([
@@ -177,6 +183,7 @@ class ConversationController extends Controller
             ], 200);
 
         } catch (\Exception $e) {
+            DB::rollBack();
             return response()->json(["error" => 'Internal server error'], 500);
         }
     }
