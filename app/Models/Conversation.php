@@ -74,7 +74,21 @@ class Conversation extends Model
         $query->where('id', $thread_id);
     }
 
-    
+    /**
+     * The scopeByUserId function filters a query by a specific user ID.
+     * 
+     * @param Builder query The `` parameter is an instance of the Laravel query builder class
+     * `Illuminate\Database\Eloquent\Builder`. It is used to build and execute database queries in an
+     * object-oriented way within Laravel applications.
+     * @param int user_id The `user_id` parameter is an integer value that is used to filter the query
+     * results based on the user ID. The `scopeByUserId` function is a query scope in Laravel that can
+     * be used to apply this filter when querying the database.
+     */
+    public function scopeByUserId(Builder $query, int $user_id): void
+    {
+        $query->where('user_id', $user_id);
+    }
+
     /**
      * The function createConversation creates a Conversation object using data provided, excluding the
      * 'subject' and 'content' fields.

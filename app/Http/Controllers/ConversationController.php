@@ -40,7 +40,7 @@ class ConversationController extends Controller
                 return response()->json(['error' => 'User not found'], 404);
             }
 
-            $query = Conversation::query();
+            $query = Conversation::byUserId($user->id);
 
             if($request->type) {
                 $query->where('conversation_type_id', $request->type);
