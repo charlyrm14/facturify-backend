@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\{
     AuthController,
-    ConversationController
+    ConversationController,
+    NotificationController
 };
 
 Route::prefix('/')->group(function () {
@@ -15,10 +16,14 @@ Route::prefix('/')->group(function () {
     });
 
     Route::prefix('threads/')->controller(ConversationController::class)->group(function () {
-        Route::get('', 'threadsList')->middleware('jwt.verify');
+        Route::get('', 'index')->middleware('jwt.verify');
         Route::get('{thread_id}', 'threadDetail')->middleware('jwt.verify');
         Route::post('', 'createThread')->middleware('jwt.verify');
         Route::post('{thread_id}/messages', 'replyMessage')->middleware('jwt.verify');
+    });
+
+    Route::prefix('notifications/')->controller(NotificationController::class)->group(function () {
+        Route::get('', 'index')->middleware('jwt.verify');
     });
 
 });
