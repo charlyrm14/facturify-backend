@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreThreadRequest;
 use App\Http\Requests\ThreadDetailRequest;
 use App\Http\Requests\ThreadRequest;
 use App\Models\Conversation;
+use App\Models\ConversationUser;
+use App\Models\Message;
 use Illuminate\Http\JsonResponse;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\DB;
 
 class ConversationController extends Controller
 {
@@ -77,7 +81,7 @@ class ConversationController extends Controller
      * response with a 'Resource not found' message and a status code of 404. If an exception occurs
      * during the
      */
-    public function threadDetail(ThreadDetailRequest $request, int $thread_id)
+    public function threadDetail(ThreadDetailRequest $request, int $thread_id): JsonResponse
     {
         try {
 
@@ -96,6 +100,46 @@ class ConversationController extends Controller
             ], 200);
 
         } catch (\Exception $e) {
+            return response()->json(["error" => 'Internal server error'], 500);
+        }
+    }
+
+    /**
+     * The function `createThread` creates a new conversation thread with an initial message and
+     * returns a JSON response.
+     * 
+     * @param StoreThreadRequest request The `createThread` function is responsible for creating a new
+     * thread in a conversation along with an initial message. It follows a transactional approach to
+     * ensure data consistency. Here's a breakdown of the code:
+     * 
+     * @return JsonResponse The `createThread` function returns a JSON response. If the thread creation
+     * is successful, it returns a JSON response with a status code of 201 (Created) containing a
+     * success message and the created conversation data. If an exception occurs during the process, it
+     * returns a JSON response with a status code of 500 (Internal Server Error) indicating an internal
+     * server error.
+     */
+    public function createThread(StoreThreadRequest $request): JsonResponse
+    {
+        DB::beginTransaction();
+
+        try {
+            
+            $data = $request->validated();
+            $conversation = Conversation::createConversation($data);
+            ConversationUser::createConversationDetail($conversation);
+            Message::createInitialMessage($conversation, $data);
+                
+            DB::commit();
+
+            $conversation->load('messages');
+
+            return response()->json([
+                'message' => 'Thread created successfully',
+                'data' => $conversation
+            ], 201);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
             return response()->json(["error" => 'Internal server error'], 500);
         }
     }

@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 
 class Conversation extends Model
 {
@@ -44,8 +46,50 @@ class Conversation extends Model
         return $this->belongsTo(User::class)->select('id', 'name', 'last_name');
     }
 
+    /**
+     * The function `messages()` returns a collection of messages associated with the current object.
+     * 
+     * @return HasMany The `messages()` function is returning a relationship method `HasMany` which
+     * defines a one-to-many relationship between the current model and the `Message` model. This means
+     * that the current model can have multiple messages associated with it.
+     */
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    /**
+     * The scopeById function filters a query by a specific thread ID.
+     *
+     * @param Builder query The `` parameter is an instance of the
+     * `Illuminate\Database\Eloquent\Builder` class, which represents a query builder for a specific
+     * model in Laravel's Eloquent ORM. It allows you to construct and execute queries for retrieving
+     * data from the corresponding database table.
+     * @param int thread_id The `thread_id` parameter is an integer value that represents the unique
+     * identifier of a thread. This parameter is used in the `scopeById` function to filter the query
+     * results based on the `id` column matching the provided `thread_id`.
+     */
     public function scopeById(Builder $query, int $thread_id): void
     {
         $query->where('id', $thread_id);
+    }
+
+    
+    /**
+     * The function createConversation creates a Conversation object using data provided, excluding the
+     * 'subject' and 'content' fields.
+     *
+     * @param array data The `createConversation` function takes an array as a parameter, which is
+     * named ``. This array likely contains information needed to create a new conversation, such
+     * as the participants, timestamps, etc. The function then processes this data by excluding the
+     * 'subject' and 'content' keys before passing it
+     *
+     * @return Conversation An instance of the Conversation class is being returned.
+     */
+    public static function createConversation(array $data): Conversation
+    {
+        return self::create(
+            collect($data)->except(['subject', 'content'])->all()
+        );
     }
 }
