@@ -30,6 +30,10 @@ class ConversationController extends Controller
     {
         try {
 
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['error' => 'User not found'], 404);
+            }
+
             $query = Conversation::query();
 
             if($request->type) {
