@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReplyMessageRequest;
 use App\Http\Requests\StoreThreadRequest;
 use App\Http\Requests\ThreadDetailRequest;
 use App\Http\Requests\ThreadRequest;
@@ -140,6 +141,42 @@ class ConversationController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
+            return response()->json(["error" => 'Internal server error'], 500);
+        }
+    }
+
+    /**
+     * This PHP function replies to a message in a conversation thread and returns a JSON response with
+     * the result.
+     * 
+     * @param ReplyMessageRequest request The `replyMessage` function takes two parameters:
+     * @param int thread_id The `thread_id` parameter in the `replyMessage` function is used to
+     * identify the conversation thread to which the reply message will be added. It is an integer
+     * value that helps in locating the specific conversation thread in the database.
+     * 
+     * @return The `replyMessage` function returns a JSON response with a success message and the data
+     * of the newly created message if the operation is successful. If there is an error during the
+     * process, it returns a JSON response with an error message indicating an internal server error.
+     */
+    public function replyMessage(ReplyMessageRequest $request, int $thread_id): JsonResponse
+    {
+        try {
+
+            $conversation = Conversation::byId($thread_id)->first();
+
+            if (!$conversation) {
+                return response()->json(['message' => 'Resource not found'], 404);
+            }
+
+            $message = Message::createReplyMessage($conversation, $request->validated());
+            $message->load(['conversation', 'user', 'parentMessage']);
+
+            return response()->json([
+                'message' => 'Message send succesfully',
+                'data' => $message
+            ], 200);
+
+        } catch (\Exception $e) {
             return response()->json(["error" => 'Internal server error'], 500);
         }
     }

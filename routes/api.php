@@ -18,6 +18,7 @@ Route::prefix('/')->group(function () {
         Route::get('', 'threadsList')->middleware('jwt.verify');
         Route::get('{thread_id}', 'threadDetail')->middleware('jwt.verify');
         Route::post('', 'createThread')->middleware('jwt.verify');
+        Route::post('{thread_id}/messages', 'replyMessage')->middleware('jwt.verify');
     });
 
 });
