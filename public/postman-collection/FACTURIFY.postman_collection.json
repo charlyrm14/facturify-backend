@@ -1,0 +1,290 @@
+{
+	"info": {
+		"_postman_id": "e1b64a9a-1778-403c-b4c9-953893213b68",
+		"name": "FACTURIFY",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28520343"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"c.iramosm90@gmail.com\",\n    \"password\": \"Ch@rlyrm07\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"login"
+							]
+						},
+						"description": "## Login API\n\nThis endpoint allows users to authenticate by providing their email and password. Upon successful authentication, users will receive a response indicating their login status.\n\n### Request\n\n- **Method**: POST\n    \n- **URL**: `http://127.0.0.1:8000/api/login`\n    \n\n#### Request Body\n\nThe request body must be sent in JSON format and should include the following parameters:\n\n- **email** (string): The email address of the user attempting to log in.\n    \n- **password** (string): The password associated with the user's account.\n    \n\nExample request body:\n\n``` json\n{\n  \"email\": \"user@example.com\",\n  \"password\": \"userpassword\"\n}\n\n ```\n\n### Response\n\nThe response will contain information regarding the success or failure of the login attempt. The expected response structure typically includes:\n\n- **status** (string): Indicates whether the login was successful or failed.\n    \n- **message** (string): A descriptive message providing additional context about the login attempt.\n    \n- **token** (string, optional): A token that may be used for subsequent authenticated requests if the login is successful.\n    \n\n### Notes\n\n- Ensure that the email and password provided are correct to avoid authentication failures.\n    \n- The response will vary based on the success or failure of the login attempt, so handle both scenarios appropriately in your application."
+					},
+					"response": []
+				},
+				{
+					"name": "Información usuario autenticado",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUyNzcxNTExLCJleHAiOjE3NTI3NzUxMTEsIm5iZiI6MTc1Mjc3MTUxMSwianRpIjoiWWhUaGh3dHhRR3d2WWNGSiIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3Iiwicm9sZSI6bnVsbH0.4cTasfX8xFx7bhfRygdtBfwPByrv_bhXTYct-B040jE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/user",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user"
+							]
+						},
+						"description": "### API Endpoint: Get User Information\n\nThis endpoint retrieves user information from the server. It is a simple HTTP GET request that does not require a request body.\n\n#### Request Format\n\n- **Method**: GET\n    \n- **URL**: `http://127.0.0.1:8000/api/user`\n    \n\n#### Response Structure\n\nUpon a successful request, the server will respond with a JSON object containing user details. The expected structure of the response may include the following fields:\n\n- `id`: Unique identifier for the user.\n    \n- `name`: The name of the user.\n    \n- `email`: The email address of the user.\n    \n- `created_at`: Timestamp of when the user was created.\n    \n- `updated_at`: Timestamp of the last update to the user information.\n    \n\nEnsure that you handle the response appropriately to extract the user information as needed."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Conversations",
+			"item": [
+				{
+					"name": "Lista de hilos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUyNzkwODUyLCJleHAiOjE3NTI3OTQ0NTIsIm5iZiI6MTc1Mjc5MDg1MiwianRpIjoiRFIzWlRWWjJET3Z2elJpayIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3Iiwicm9sZSI6bnVsbH0.pJ7Cbu5il70cvDG5t_JCXu_7QwMAJ7kZe395PBqdA8I",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/threads",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"threads"
+							]
+						},
+						"description": "## API Endpoint: Retrieve Threads\n\n### Purpose\n\nThis endpoint allows clients to retrieve a list of threads from the server. It is primarily used to fetch discussions or topics that users can engage with.\n\n### Request Format\n\n- **Method**: GET\n    \n- **URL**: `http://127.0.0.1:8000/api/threads`\n    \n\n### Expected Request Body\n\n- This endpoint does not require a request body. It is a simple GET request that retrieves data without any additional parameters.\n    \n\n### Response Structure\n\nUpon a successful request, the server will respond with a JSON object containing the following structure:\n\n- **threads**: An array of thread objects, where each object contains:\n    \n    - **id**: Unique identifier for the thread.\n        \n    - **title**: The title of the thread.\n        \n    - **created_at**: Timestamp indicating when the thread was created.\n        \n    - **updated_at**: Timestamp indicating when the thread was last updated.\n        \n    - **author**: Information about the user who created the thread.\n        \n\n### Example Response\n\n``` json\n{\n  \"threads\": [\n    {\n      \"id\": 1,\n      \"title\": \"Sample Thread Title\",\n      \"created_at\": \"2023-10-01T12:00:00Z\",\n      \"updated_at\": \"2023-10-01T12:00:00Z\",\n      \"author\": {\n        \"id\": 1,\n        \"name\": \"Author Name\"\n      }\n    }\n    // Additional thread objects...\n  ]\n}\n\n ```\n\nThis structure provides clients with the necessary information to display threads in their applications."
+					},
+					"response": []
+				},
+				{
+					"name": "Información de hilo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUyNzc5MDQ2LCJleHAiOjE3NTI3ODI2NDYsIm5iZiI6MTc1Mjc3OTA0NiwianRpIjoicW5ISmpSZ1Jua3Nuek05eiIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3Iiwicm9sZSI6bnVsbH0.qdzXOgjr3bTEiVR9yZJ0WghHyGpW9ECvKczYE0rRFSw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/threads/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"threads",
+								"1"
+							]
+						},
+						"description": "## API Request: Get Thread by ID\n\nThis endpoint retrieves the details of a specific thread identified by its unique ID.\n\n### Request\n\n- **Method**: GET\n    \n- **URL**: `http://127.0.0.1:8000/api/threads/{id}`\n    \n- **Path Parameter**:\n    \n    - `id` (integer): The unique identifier of the thread you wish to retrieve. In this example, the ID is `1`.\n        \n\n### Response\n\nThe response will contain the details of the requested thread. The structure of the response typically includes:\n\n- `id` (integer): The unique identifier of the thread.\n    \n- `title` (string): The title of the thread.\n    \n- `content` (string): The content or body of the thread.\n    \n- `created_at` (string): The timestamp when the thread was created.\n    \n- `updated_at` (string): The timestamp when the thread was last updated.\n    \n\n### Example Response\n\n``` json\n{\n  \"id\": 1,\n  \"title\": \"Example Thread Title\",\n  \"content\": \"This is the content of the thread.\",\n  \"created_at\": \"2023-10-01T12:00:00Z\",\n  \"updated_at\": \"2023-10-01T12:00:00Z\"\n}\n\n ```\n\nThis endpoint is useful for retrieving detailed information about a specific thread to display in a user interface or for further processing."
+					},
+					"response": []
+				},
+				{
+					"name": "Nuevo hilo con mensaje",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUyNzkwODUyLCJleHAiOjE3NTI3OTQ0NTIsIm5iZiI6MTc1Mjc5MDg1MiwianRpIjoiRFIzWlRWWjJET3Z2elJpayIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3Iiwicm9sZSI6bnVsbH0.pJ7Cbu5il70cvDG5t_JCXu_7QwMAJ7kZe395PBqdA8I",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"subject\": \"UX/UI Ecommerce\",\n    \"content\": \"Propuesta ux/ui para el ecommerce\",\n    \"conversation_type_id\": 2,\n    \"name\": \"Diseño\",\n    \"user_id\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/threads",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"threads"
+							]
+						},
+						"description": "## Create a Thread\n\nThis endpoint allows users to create a new thread in the discussion forum. It accepts a POST request containing the details of the thread to be created.\n\n### Request Body\n\nThe request must be sent in JSON format and should include the following parameters:\n\n- **subject** (string): The title of the thread. This should succinctly summarize the topic of discussion.\n    \n- **content** (string): The main content or body of the thread. This can include detailed information, proposals, or any relevant discussion points.\n    \n- **conversation_type_id** (integer): An identifier representing the type of conversation. This helps categorize the thread appropriately.\n    \n- **name** (string): The name associated with the thread, which could represent the topic or the creator's intent.\n    \n- **user_id** (integer): The identifier of the user creating the thread. This links the thread to the specific user in the system.\n    \n\n### Response Structure\n\nUpon successful creation of the thread, the response will typically include:\n\n- **id** (integer): The unique identifier of the newly created thread.\n    \n- **subject** (string): The subject of the thread as provided in the request.\n    \n- **content** (string): The content of the thread as provided in the request.\n    \n- **conversation_type_id** (integer): The conversation type ID as provided in the request.\n    \n- **name** (string): The name associated with the thread as provided in the request.\n    \n- **user_id** (integer): The user ID of the thread creator as provided in the request.\n    \n- **created_at** (string): Timestamp indicating when the thread was created.\n    \n- **updated_at** (string): Timestamp indicating the last time the thread was updated.\n    \n\n### Example Request\n\n``` json\n{\n    \"subject\": \"UX/UI Ecommerce\",\n    \"content\": \"Propuesta ux/ui para el ecomme ...\",\n    \"conversation_type_id\": 2,\n    \"name\": \"Diseño\",\n    \"user_id\": 3\n}\n\n ```\n\nThis endpoint is essential for users who wish to initiate discussions or share ideas within the platform."
+					},
+					"response": []
+				},
+				{
+					"name": "Responder mensaje de hilo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUyNzkwODUyLCJleHAiOjE3NTI3OTQ0NTIsIm5iZiI6MTc1Mjc5MDg1MiwianRpIjoiRFIzWlRWWjJET3Z2elJpayIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3Iiwicm9sZSI6bnVsbH0.pJ7Cbu5il70cvDG5t_JCXu_7QwMAJ7kZe395PBqdA8I",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"Bien, trabajare en una propuesta\",\n    \"sender_id\": 1,\n    \"parent_message_id\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/threads/2/messages",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"threads",
+								"2",
+								"messages"
+							]
+						},
+						"description": "### POST /api/threads/{thread_id}/messages\n\nThis endpoint allows users to send a new message to a specific thread identified by `thread_id`. It is primarily used in messaging applications to facilitate communication within discussion threads.\n\n#### Request Parameters\n\nThe request body must be a JSON object containing the following parameters:\n\n- **content** (string): The text content of the message. This is a required field and should contain the message that the user wants to send.\n    \n- **sender_id** (integer): The unique identifier of the user sending the message. This field is required to associate the message with the correct user.\n    \n- **parent_message_id** (integer or null): The identifier of the parent message if this message is a reply. If the message is a standalone message, this should be set to `null`.\n    \n\n#### Example Request Body\n\n``` json\n{\n  \"content\": \"Bien, trabajare en una propues ...\",\n  \"sender_id\": 1,\n  \"parent_message_id\": null\n}\n\n ```\n\n#### Response Structure\n\nUpon successful creation of the message, the server will respond with a JSON object that typically includes:\n\n- **message_id** (integer): The unique identifier of the newly created message.\n    \n- **content** (string): The content of the message that was sent.\n    \n- **sender_id** (integer): The ID of the user who sent the message.\n    \n- **thread_id** (integer): The ID of the thread to which the message was sent.\n    \n- **timestamp** (string): The date and time when the message was created.\n    \n\nThis response confirms that the message has been successfully added to the specified thread and provides details about the created message."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notifications",
+			"item": [
+				{
+					"name": "Listado de notificaciones",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUyNzk1MDYyLCJleHAiOjE3NTI3OTg2NjIsIm5iZiI6MTc1Mjc5NTA2MiwianRpIjoiVTg1clkwQ1NHT1lkUndpTCIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3Iiwicm9sZSI6bnVsbH0.V-N3Dh2D4Zfda_hJ-MwT0fKufH_M8dyyLF_wszxAaAI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"subject\": \"Asunto importante\",\n    \"content\": \"Este es el primer mensaje de una nueva conversación\",\n    \"conversation_type_id\": 1,\n    \"name\": \"Los amigos\",\n    \"user_id\": 1\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/notifications",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"notifications"
+							]
+						},
+						"description": "## Get Notifications\n\nThis endpoint retrieves a list of notifications for the user. The request does not require any parameters to be passed in the URL, as it is a simple GET request.\n\n### Request Parameters\n\nThe request payload can include the following parameters:\n\n- **subject** (string): The subject of the notification.\n    \n- **content** (string): The content of the notification message.\n    \n- **conversation_type_id** (integer): An identifier for the type of conversation associated with the notification.\n    \n- **name** (string): The name associated with the notification.\n    \n- **user_id** (integer): The ID of the user for whom the notifications are being retrieved.\n    \n\n### Expected Response\n\nThe response will return a JSON object containing the notifications related to the user. Each notification will include relevant details such as the subject, content, and associated user information.\n\n### Notes\n\n- Ensure that the user is authenticated before making this request, as notifications are user-specific.\n    \n- The response may vary based on the user's notification settings and the notifications available in the system."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
