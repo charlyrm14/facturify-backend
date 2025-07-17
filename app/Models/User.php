@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -66,5 +67,17 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    /**
+     * The function `conversation()` returns a HasMany relationship for the Conversation model.
+     * 
+     * @return HasMany A relationship method named `conversation` is being returned, which defines a
+     * one-to-many relationship between the current model and the `Conversation` model. This method
+     * returns a `HasMany` relationship instance.
+     */
+    public function conversation(): HasMany
+    {
+        return $this->hasMany(Conversation::class);
     }
 }
