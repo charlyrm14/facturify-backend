@@ -12,6 +12,7 @@ use App\Models\Conversation;
 use App\Models\ConversationUser;
 use App\Models\Message;
 use App\Models\Notification;
+use App\Resources\MessageResource;
 use Illuminate\Http\JsonResponse;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\DB;
@@ -175,15 +176,16 @@ class ConversationController extends Controller
                 return response()->json(['message' => 'Resource not found'], 404);
             }
 
-            DB::commit();
-
             $message = Message::createReplyMessage($conversation, $request->validated());
             Notification::createNotificationReplyMessage($conversation->user_id, $message);
+
+            DB::commit();
+
             $message->load(['conversation', 'user', 'parentMessage']);
 
             return response()->json([
                 'message' => 'Message send succesfully',
-                'data' => $message
+                'data' => new MessageResource($message)
             ], 200);
 
         } catch (\Exception $e) {
