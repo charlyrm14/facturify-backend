@@ -133,11 +133,11 @@ class ConversationController extends Controller
             $data = $request->validated();
             $conversation = Conversation::createConversation($data);
             ConversationUser::createConversationDetail($conversation);
-            Message::createInitialMessage($conversation, $data);
+            $message = Message::createInitialMessage($conversation, $data);
                 
             DB::commit();
 
-            $conversation->load('messages');
+            $conversation->message = $message;
 
             return response()->json([
                 'message' => 'Thread created successfully',
