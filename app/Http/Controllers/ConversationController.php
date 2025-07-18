@@ -91,7 +91,11 @@ class ConversationController extends Controller
                 return response()->json(['error' => 'User not found'], 404);
             }
             
-            $conversation = Conversation::with(['conversationType', 'user'])->byId($thread_id)->first();
+            $conversation = Conversation::with([
+                'conversationType', 
+                'user', 
+                'messages'
+            ])->byId($thread_id)->first();
 
             if(!$conversation) {
                 return response()->json(['message' => 'Resource not found'], 404);

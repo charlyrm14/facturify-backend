@@ -59,6 +59,18 @@ class Conversation extends Model
     }
 
     /**
+     * The function `firstMessage` returns the oldest message associated with the current object.
+     * 
+     * @return The `firstMessage` function is returning a relationship query using Eloquent ORM in
+     * Laravel. It is defining a one-to-one relationship with the `Message` model and ordering the
+     * results by the `created_at` column in ascending order.
+     */
+    public function firstMessage()
+    {
+        return $this->hasOne(Message::class)->orderBy('created_at', 'asc');
+    }
+
+    /**
      * The scopeById function filters a query by a specific thread ID.
      *
      * @param Builder query The `` parameter is an instance of the
