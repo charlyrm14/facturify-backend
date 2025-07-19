@@ -186,7 +186,7 @@ class ConversationController extends Controller
             return response()->json([
                 'message' => 'Message send succesfully',
                 'data' => new MessageResource($message)
-            ], 200);
+            ], 201);
 
         } catch (\Exception $e) {
             DB::rollBack();
